@@ -1,6 +1,6 @@
 # abbado
 
-abbado description here
+Conductor for concurrent async control flow (under construction)
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
@@ -15,6 +15,7 @@ npm i abbado
 
 ```js
 const abbado = require('abbado');
+// to be continue...
 ```
 
 ## License
