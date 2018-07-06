@@ -9,6 +9,15 @@ test('stop manually', t => {
     t.is(_.stopped(), true);
 });
 
+test('stop by count', t => {
+    const _ = m({count: 3});
+    t.is(_.stopped(), false);
+    t.is(_.stopped(), false);
+    t.is(_.stopped(), false);
+    t.is(_.stopped(), true);
+    t.is(_.stopped(), true);
+});
+
 test('stop by timeout', async t => {
     const _ = m({timeout: 30});
     t.is(_.stopped(), false);
