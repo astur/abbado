@@ -26,3 +26,10 @@ test('stop by timeout', async t => {
     await delay(20);
     t.is(_.stopped(), true);
 });
+
+test('wait', async t => {
+    const _ = m();
+    const now = Date.now();
+    await _.wait();
+    t.true(now + 10 > Date.now());
+});
