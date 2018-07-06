@@ -26,7 +26,7 @@ module.exports = ({
         }, ms);
     };
     const wait = () => new Promise(resolve => {
-        if(timer === null){
+        if(timer === null || off){
             resolve();
         } else {
             waiting.push(resolve);
