@@ -38,8 +38,10 @@ test('pause', async t => {
     const _ = m();
     const now = Date.now();
     _.pause(1000);
+    const p = _.wait();
     _.pause(50);
     await Promise.all([
+        p,
         _.wait(),
         Promise.resolve().then(_.wait),
         delay(10).then(_.wait),
