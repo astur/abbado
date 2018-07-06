@@ -1,6 +1,6 @@
 # abbado
 
-Conductor for concurrent async control flow. Simple way to stop all concurrent task-running flows without aborting currently running tasks, or to pause all flows at the same time.
+Conductor for concurrent async control flow. Simple way to stop all concurrent task-running flows without aborting currently running tasks. Also it's a good way to pause all flows at the same time from one place of code.
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
@@ -21,9 +21,10 @@ const _ = abbado(options);
 ### methods:
 
 * `stopped` - returns `true` if control flow is stopped and `false` otherwise.
-* `stop` - manually stop control flow.
+* `stop` - manually stop control flow and reset pause (if paused).
 * `pause` - set flows on pause (only parameter - pause length in ms).
-* `wait` - waits for pause finish. Actually returns promise, that resolves after pause finished or immediately if there is no pause.
+* `resume` - alias for `pause(0)`.
+* `wait` - waits for pause finish. Actually returns promise, that resolves after pause finished or immediately if there is no pause or if already stopped. If pause will be changed after waiting started, promise will wait for new pause length before resolve. If `stop` or `resume` will be called after waiting started, promise will resolve immediately.
 
 ### options:
 
