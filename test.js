@@ -33,3 +33,18 @@ test('wait', async t => {
     await _.wait();
     t.true(now + 10 > Date.now());
 });
+
+test('pause', async t => {
+    const _ = m();
+    const now = Date.now();
+    _.pause(1000);
+    _.pause(50);
+    await Promise.all([
+        _.wait(),
+        Promise.resolve().then(_.wait),
+        delay(10).then(_.wait),
+        Promise.resolve().then(() => _.wait()),
+    ]);
+    t.true(now + 50 <= Date.now());
+    t.true(now + 55 >= Date.now());
+});
