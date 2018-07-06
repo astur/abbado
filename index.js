@@ -15,9 +15,23 @@ module.exports = ({
     const stopped = () => off || count !== null && count-- <= 0;
 
     // pause
+    let timer = null;
+    const waiting = [];
+    const pause = ms => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            waiting.forEach(r => r());
+            waiting.splice(0);
+            timer = null;
+        }, ms);
+    };
     const wait = () => new Promise(resolve => {
-        resolve();
+        if(timer === null){
+            resolve();
+        } else {
+            waiting.push(resolve);
+        }
     });
 
-    return {stop, stopped, wait};
+    return {stop, stopped, pause, wait};
 };
