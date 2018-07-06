@@ -48,3 +48,12 @@ test('pause', async t => {
     t.true(now + 50 <= Date.now());
     t.true(now + 55 >= Date.now());
 });
+
+test('pause stopped', async t => {
+    const _ = m();
+    const now = Date.now();
+    _.pause(1000);
+    _.stop();
+    await _.wait();
+    t.true(now + 5 >= Date.now());
+});
