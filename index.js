@@ -2,21 +2,16 @@ module.exports = ({
     timeout = null,
     count = null,
 } = {}) => {
-    // stop
     let off = false;
+    let timer = null;
+    const waiting = [];
+
     if(timeout){
         setTimeout(() => {
             off = true;
         }, timeout);
     }
-    const stop = () => {
-        off = true;
-    };
-    const stopped = () => off || count !== null && count-- <= 0;
 
-    // pause
-    let timer = null;
-    const waiting = [];
     const pause = ms => {
         clearTimeout(timer);
         timer = setTimeout(() => {
@@ -25,6 +20,7 @@ module.exports = ({
             timer = null;
         }, ms);
     };
+
     const wait = () => new Promise(resolve => {
         if(timer === null || off){
             resolve();
@@ -32,6 +28,13 @@ module.exports = ({
             waiting.push(resolve);
         }
     });
+
+    const stop = () => {
+        if(timer !== null) pause(0);
+        off = true;
+    };
+
+    const stopped = () => off || count !== null && count-- <= 0;
 
     return {stop, stopped, pause, wait};
 };
