@@ -1,4 +1,7 @@
-module.exports = ({timeout = null} = {}) => {
+module.exports = ({
+    timeout = null,
+    count = null,
+} = {}) => {
     let off = false;
 
     if(timeout){
@@ -11,7 +14,7 @@ module.exports = ({timeout = null} = {}) => {
         off = true;
     };
 
-    const stopped = () => off;
+    const stopped = () => off || count !== null && count-- <= 0;
 
     return {stop, stopped};
 };
