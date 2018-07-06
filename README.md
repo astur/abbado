@@ -1,6 +1,6 @@
 # abbado
 
-Conductor for concurrent async control flow (under construction)
+Conductor for concurrent async control flow. Simple way to stop all concurrent task-running flows without aborting currently running tasks.
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
@@ -15,8 +15,18 @@ npm i abbado
 
 ```js
 const abbado = require('abbado');
-// to be continue...
+const _ = abbado(options);
 ```
+
+### methods:
+
+* `stopped` - returns `true` if control flow is stopped and `false` otherwise.
+* `stop` - manually stop control flow.
+
+### options:
+
+* `timeout` - time in milliseconds time in milliseconds, after which control flow will be stopped.
+* `count` - number limiting how many times `stopped` may return `false`.
 
 ## License
 
