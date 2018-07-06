@@ -53,7 +53,8 @@ test('pause stopped', async t => {
     const _ = m();
     const now = Date.now();
     _.pause(1000);
+    const p = _.wait();
     _.stop();
-    await _.wait();
+    await Promise.all([p, _.wait()]);
     t.true(now + 5 >= Date.now());
 });
