@@ -58,5 +58,14 @@ test('pause stopped', async t => {
     const p = _.wait();
     _.stop();
     await Promise.all([p, _.wait()]);
-    t.true(now + 5 >= Date.now());
+    t.true(now + 10 >= Date.now());
+});
+
+test('resume', async t => {
+    const _ = m();
+    const now = Date.now();
+    _.pause(1000);
+    _.resume();
+    await _.wait();
+    t.true(now + 10 >= Date.now());
 });
