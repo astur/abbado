@@ -21,6 +21,8 @@ module.exports = ({
         }, ms);
     };
 
+    const resume = () => pause(0);
+
     const wait = () => new Promise(resolve => {
         if(timer === null || off){
             resolve();
@@ -36,5 +38,5 @@ module.exports = ({
 
     const stopped = () => off || count !== null && count-- <= 0;
 
-    return {stop, stopped, pause, wait};
+    return {stop, stopped, pause, resume, wait};
 };
