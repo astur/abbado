@@ -31,6 +31,17 @@ const _ = abbado(options);
 * `timeout` - time in milliseconds time in milliseconds, after which control flow will be stopped.
 * `count` - number limiting how many times `stopped` may return `false`.
 
+### example:
+
+```js
+console.log(_.stopped()); //false
+_.pause(1000);
+_.wait()
+    .then(doSomethingAfter1000ms)
+    .then(() => _stop())
+    .then(() => console.log(_.stopped())); //true
+```
+
 ## License
 
 MIT
