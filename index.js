@@ -5,12 +5,7 @@ module.exports = ({
     let off = false;
     let timer = null;
     const waiting = [];
-
-    if(timeout){
-        setTimeout(() => {
-            off = true;
-        }, timeout);
-    }
+    const expires = timeout ? Date.now() + timeout : null;
 
     const pause = ms => {
         clearTimeout(timer);
@@ -36,7 +31,12 @@ module.exports = ({
         off = true;
     };
 
-    const stopped = () => off || count !== null && count-- <= 0;
+    const stopped = () => {
+        if(off) return true;
+        if(count !== null && count-- <= 0) return true;
+        if(expires !== null && expires < Date.now()) return true;
+        return false;
+    };
 
     return {stop, stopped, pause, resume, wait};
 };
