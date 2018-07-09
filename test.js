@@ -75,4 +75,9 @@ test('error', t => {
     t.deepEqual(_.error(), [1, null]);
     t.deepEqual(_.error(), [2, null]);
     t.deepEqual(_.error(), [3, null]);
+    t.deepEqual(_.error('tag1'), [4, 1]);
+    t.deepEqual(_.error('tag1'), [5, 2]);
+    t.deepEqual(_.error('tag1'), [6, 3]);
+    t.deepEqual(_.error('tag2'), [7, 1]);
+    t.deepEqual(_.error(), [8, null]);
 });
