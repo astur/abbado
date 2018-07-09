@@ -91,3 +91,19 @@ test('error limit', t => {
     _.error();
     t.is(_.stopped(), true);
 });
+
+test('tag error limit', t => {
+    const _ = m({tagErrorLimit: 3});
+    t.is(_.stopped(), false);
+    _.error('tag');
+    _.error('tag');
+    t.is(_.stopped(), false);
+    _.error();
+    _.error();
+    _.error();
+    _.error();
+    _.error('TAG');
+    t.is(_.stopped(), false);
+    _.error('tag');
+    t.is(_.stopped(), true);
+});
