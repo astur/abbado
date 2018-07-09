@@ -81,3 +81,13 @@ test('error', t => {
     t.deepEqual(_.error('tag2'), [7, 1]);
     t.deepEqual(_.error(), [8, null]);
 });
+
+test('error limit', t => {
+    const _ = m({errorLimit: 3});
+    t.is(_.stopped(), false);
+    _.error();
+    _.error('tag');
+    t.is(_.stopped(), false);
+    _.error();
+    t.is(_.stopped(), true);
+});
