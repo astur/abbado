@@ -18,7 +18,7 @@ test('stop by count', t => {
     t.is(_.stopped(), true);
 });
 
-test('stop by timeout', async t => {
+test.serial('stop by timeout', async t => {
     const _ = m({timeout: 30});
     t.is(_.stopped(), false);
     await delay(20);
@@ -27,14 +27,14 @@ test('stop by timeout', async t => {
     t.is(_.stopped(), true);
 });
 
-test('wait', async t => {
+test.serial('wait', async t => {
     const _ = m();
     const now = Date.now();
     await _.wait();
     t.true(now + 10 > Date.now());
 });
 
-test('pause', async t => {
+test.serial('pause', async t => {
     const _ = m();
     const now = Date.now();
     _.pause(1000);
@@ -51,7 +51,7 @@ test('pause', async t => {
     t.true(now + 55 >= Date.now());
 });
 
-test('pause stopped', async t => {
+test.serial('pause stopped', async t => {
     const _ = m();
     const now = Date.now();
     _.pause(1000);
@@ -61,7 +61,7 @@ test('pause stopped', async t => {
     t.true(now + 10 >= Date.now());
 });
 
-test('resume', async t => {
+test.serial('resume', async t => {
     const _ = m();
     const now = Date.now();
     _.pause(1000);
