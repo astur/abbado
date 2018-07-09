@@ -2,6 +2,7 @@ module.exports = ({
     timeout = null,
     count = null,
     errorLimit = null,
+    tagErrorLimit = null,
 } = {}) => {
     let off = false;
     let timer = null;
@@ -46,6 +47,7 @@ module.exports = ({
         if(errorLimit !== null && errorLimit <= errorsCount) stop();
         if(typeof tag === 'string'){
             errors[tag] = (errors[tag] || 0) + 1;
+            if(tagErrorLimit !== null && tagErrorLimit <= errors[tag]) stop();
         }
         return [errorsCount, errors[tag] || null];
     };
