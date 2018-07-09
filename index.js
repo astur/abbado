@@ -5,6 +5,7 @@ module.exports = ({
     let off = false;
     let timer = null;
     let errorsCount = 0;
+    const errors = {};
     const waiting = [];
     const expires = timeout ? Date.now() + timeout : null;
 
@@ -39,7 +40,13 @@ module.exports = ({
         return false;
     };
 
-    const error = () => [++errorsCount, null];
+    const error = tag => {
+        errorsCount++;
+        if(typeof tag === 'string'){
+            errors[tag] = (errors[tag] || 0) + 1;
+        }
+        return [errorsCount, errors[tag] || null];
+    };
 
     return {stop, stopped, pause, resume, wait, error};
 };
