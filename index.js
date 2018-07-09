@@ -1,6 +1,7 @@
 module.exports = ({
     timeout = null,
     count = null,
+    errorLimit = null,
 } = {}) => {
     let off = false;
     let timer = null;
@@ -42,6 +43,7 @@ module.exports = ({
 
     const error = tag => {
         errorsCount++;
+        if(errorLimit !== null && errorLimit <= errorsCount) stop();
         if(typeof tag === 'string'){
             errors[tag] = (errors[tag] || 0) + 1;
         }
