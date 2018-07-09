@@ -69,3 +69,10 @@ test('resume', async t => {
     await _.wait();
     t.true(now + 10 >= Date.now());
 });
+
+test('error', t => {
+    const _ = m();
+    t.deepEqual(_.error(), [1, null]);
+    t.deepEqual(_.error(), [2, null]);
+    t.deepEqual(_.error(), [3, null]);
+});
