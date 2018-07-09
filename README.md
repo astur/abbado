@@ -25,11 +25,14 @@ const _ = abbado(options);
 * `pause` - set flows on pause (only parameter - pause length in ms).
 * `resume` - alias for `pause(0)`.
 * `wait` - waits for pause finish. Actually returns promise, that resolves after pause finished or immediately if there is no pause or if already stopped. If pause will be changed after waiting started, promise will wait for new pause length before resolve. If `stop` or `resume` will be called after waiting started, promise will resolve immediately.
+* `error` - reports error. Optional parameter is string tag, describing kind of error. Returns array of two numbers: number of all reported errors and number of errors with same tag (or `null` if no tag).
 
 ### options:
 
 * `timeout` - time in milliseconds time in milliseconds, after which control flow will be stopped.
 * `count` - number limiting how many times `stopped` may return `false`.
+* `errorLimit` - number limiting how many errors may be reported by `error` method before control flow will be stopped.
+* `tagErrorLimit` - same as `errorLimit` but for any single tag.
 
 ### example:
 
