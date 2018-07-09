@@ -4,6 +4,7 @@ module.exports = ({
 } = {}) => {
     let off = false;
     let timer = null;
+    let errorsCount = 0;
     const waiting = [];
     const expires = timeout ? Date.now() + timeout : null;
 
@@ -38,5 +39,7 @@ module.exports = ({
         return false;
     };
 
-    return {stop, stopped, pause, resume, wait};
+    const error = () => [++errorsCount, null];
+
+    return {stop, stopped, pause, resume, wait, error};
 };
