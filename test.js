@@ -48,7 +48,7 @@ test.serial('pause', async t => {
         Promise.resolve().then(() => _.wait()),
     ]);
     t.true(now + 50 <= Date.now());
-    t.true(now + 55 >= Date.now());
+    t.true(now + 60 >= Date.now());
 });
 
 test.serial('pause stopped', async t => {
