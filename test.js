@@ -9,6 +9,14 @@ test('stop manually', t => {
     t.deepEqual(_.stopped(), {status: 'stopped manually'});
 });
 
+test('stop manually with message', t => {
+    const _ = m();
+    t.is(_.stopped(), false);
+    _.stop('stopped in test');
+    _.stop('never mind');
+    t.deepEqual(_.stopped(), {status: 'stopped in test'});
+});
+
 test('stop by count', t => {
     const _ = m({count: 3});
     t.is(_.stopped(), false);
