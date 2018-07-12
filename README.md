@@ -20,8 +20,8 @@ const _ = abbado(options);
 
 ### methods:
 
-* `stopped` - returns `true` if control flow is stopped and `false` otherwise.
-* `stop` - manually stop control flow and reset pause (if paused).
+* `stopped` - returns `false` if control flow is not stopped and stats object otherwise.
+* `stop` - manually stop control flow (if not stopped yet) and reset pause (if paused). Optional parameter is a custom stats object or string for `status` field of stats object. Returns stats object.
 * `pause` - set flows on pause (only parameter - pause length in ms).
 * `resume` - alias for `pause(0)`.
 * `wait` - waits for pause finish. Actually returns promise, that resolves after pause finished or immediately if there is no pause or if already stopped. If pause will be changed after waiting started, promise will wait for new pause length before resolve. If `stop` or `resume` will be called after waiting started, promise will resolve immediately.
@@ -42,7 +42,7 @@ _.pause(1000);
 _.wait()
     .then(doSomethingAfter1000ms)
     .then(() => _stop())
-    .then(() => console.log(_.stopped())); //true
+    .then(() => console.log(_.stopped())); //{status: 'stopped manually'}
 ```
 
 ## License
