@@ -5,7 +5,7 @@ const delay = require('delay');
 test('stop manually', t => {
     const _ = m();
     t.is(_.stopped(), false);
-    _.stop();
+    t.deepEqual(_.stop(), {status: 'stopped manually'});
     t.deepEqual(_.stopped(), {status: 'stopped manually'});
 });
 
