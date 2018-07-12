@@ -31,11 +31,12 @@ module.exports = ({
         }
     });
 
-    const stop = () => {
+    const stop = arg => {
         if(timer !== null) pause(0);
+        if(typeof arg === 'string') arg = {status: arg};
         if(!off){
             off = true;
-            result = {status: 'stopped manually'};
+            result = arg || {status: 'stopped manually'};
         }
     };
 
@@ -48,22 +49,10 @@ module.exports = ({
 
     const error = tag => {
         errorsCount++;
-        if(errorLimit !== null && errorLimit <= errorsCount){
-            if(timer !== null) pause(0);
-            if(!off){
-                off = true;
-                result = {status: 'stopped by error limit'};
-            }
-        }
+        if(errorLimit !== null && errorLimit <= errorsCount) return stop({status: 'stopped by error limit'});
         if(typeof tag === 'string'){
             errors[tag] = (errors[tag] || 0) + 1;
-            if(tagErrorLimit !== null && tagErrorLimit <= errors[tag]){
-                if(timer !== null) pause(0);
-                if(!off){
-                    off = true;
-                    result = {status: 'stopped by tag error limit', tag};
-                }
-            }
+            if(tagErrorLimit !== null && tagErrorLimit <= errors[tag]) return stop({status: 'stopped by tag error limit', tag});
         }
         return [errorsCount, errors[tag] || null];
     };
