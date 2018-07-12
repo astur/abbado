@@ -38,12 +38,13 @@ module.exports = ({
             off = true;
             result = arg || {status: 'stopped manually'};
         }
+        return result;
     };
 
     const stopped = () => {
         if(off) return result;
-        if(count !== null && count-- <= 0) return {status: 'stopped by count'};
-        if(expires !== null && expires < Date.now()) return {status: 'stopped by timeout'};
+        if(count !== null && count-- <= 0) return stop({status: 'stopped by count'});
+        if(expires !== null && expires < Date.now()) return stop({status: 'stopped by timeout'});
         return false;
     };
 
