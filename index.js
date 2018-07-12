@@ -4,8 +4,7 @@ module.exports = ({
     errorLimit = null,
     tagErrorLimit = null,
 } = {}) => {
-    let off = false;
-    let result;
+    let result = false;
     let timer = null;
     let errorsCount = 0;
     const errors = {};
@@ -24,7 +23,7 @@ module.exports = ({
     const resume = () => pause(0);
 
     const wait = () => new Promise(resolve => {
-        if(timer === null || off){
+        if(timer === null || result){
             resolve();
         } else {
             waiting.push(resolve);
@@ -34,15 +33,12 @@ module.exports = ({
     const stop = arg => {
         if(timer !== null) pause(0);
         if(typeof arg === 'string') arg = {status: arg};
-        if(!off){
-            off = true;
-            result = arg || {status: 'stopped manually'};
-        }
+        if(!result) result = arg || {status: 'stopped manually'};
         return result;
     };
 
     const stopped = () => {
-        if(off) return result;
+        if(result) return result;
         if(count !== null && count-- <= 0) return stop({status: 'stopped by count'});
         if(expires !== null && expires < Date.now()) return stop({status: 'stopped by timeout'});
         return false;
