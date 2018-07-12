@@ -5,6 +5,7 @@ module.exports = ({
     tagErrorLimit = null,
 } = {}) => {
     let off = false;
+    let result;
     let timer = null;
     let errorsCount = 0;
     const errors = {};
@@ -32,22 +33,37 @@ module.exports = ({
 
     const stop = () => {
         if(timer !== null) pause(0);
-        off = true;
+        if(!off){
+            off = true;
+            result = {status: 'stopped manually'};
+        }
     };
 
     const stopped = () => {
-        if(off) return true;
-        if(count !== null && count-- <= 0) return true;
-        if(expires !== null && expires < Date.now()) return true;
+        if(off) return result;
+        if(count !== null && count-- <= 0) return {status: 'stopped by count'};
+        if(expires !== null && expires < Date.now()) return {status: 'stopped by timeout'};
         return false;
     };
 
     const error = tag => {
         errorsCount++;
-        if(errorLimit !== null && errorLimit <= errorsCount) stop();
+        if(errorLimit !== null && errorLimit <= errorsCount){
+            if(timer !== null) pause(0);
+            if(!off){
+                off = true;
+                result = {status: 'stopped by error limit'};
+            }
+        }
         if(typeof tag === 'string'){
             errors[tag] = (errors[tag] || 0) + 1;
-            if(tagErrorLimit !== null && tagErrorLimit <= errors[tag]) stop();
+            if(tagErrorLimit !== null && tagErrorLimit <= errors[tag]){
+                if(timer !== null) pause(0);
+                if(!off){
+                    off = true;
+                    result = {status: 'stopped by tag error limit', tag};
+                }
+            }
         }
         return [errorsCount, errors[tag] || null];
     };
