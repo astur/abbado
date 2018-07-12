@@ -6,7 +6,7 @@ test('stop manually', t => {
     const _ = m();
     t.is(_.stopped(), false);
     _.stop();
-    t.is(_.stopped(), true);
+    t.deepEqual(_.stopped(), {status: 'stopped manually'});
 });
 
 test('stop by count', t => {
@@ -14,8 +14,8 @@ test('stop by count', t => {
     t.is(_.stopped(), false);
     t.is(_.stopped(), false);
     t.is(_.stopped(), false);
-    t.is(_.stopped(), true);
-    t.is(_.stopped(), true);
+    t.is(!!_.stopped(), true);
+    t.deepEqual(_.stopped(), {status: 'stopped by count'});
 });
 
 test.serial('stop by timeout', async t => {
@@ -24,7 +24,7 @@ test.serial('stop by timeout', async t => {
     await delay(20);
     t.is(_.stopped(), false);
     await delay(20);
-    t.is(_.stopped(), true);
+    t.deepEqual(_.stopped(), {status: 'stopped by timeout'});
 });
 
 test.serial('wait', async t => {
@@ -89,7 +89,7 @@ test('error limit', t => {
     _.error('tag');
     t.is(_.stopped(), false);
     _.error();
-    t.is(_.stopped(), true);
+    t.deepEqual(_.stopped(), {status: 'stopped by error limit'});
 });
 
 test('tag error limit', t => {
@@ -105,5 +105,5 @@ test('tag error limit', t => {
     _.error('TAG');
     t.is(_.stopped(), false);
     _.error('tag');
-    t.is(_.stopped(), true);
+    t.deepEqual(_.stopped(), {status: 'stopped by tag error limit', tag: 'tag'});
 });
