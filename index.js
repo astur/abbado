@@ -54,5 +54,7 @@ module.exports = ({
         return [errorsCount, errors[tag] || null];
     };
 
-    return {stop, stopped, pause, resume, wait, error};
+    const paused = () => timer !== null;
+
+    return {stop, stopped, pause, resume, wait, error, paused};
 };
