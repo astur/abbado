@@ -115,3 +115,12 @@ test('tag error limit', t => {
     _.error('tag');
     t.deepEqual(_.stopped(), {status: 'stopped by tag error limit', tag: 'tag'});
 });
+
+test.serial('paused', async t => {
+    const _ = m();
+    _.pause(1000);
+    t.true(_.paused());
+    _.resume();
+    await delay(1);
+    t.false(_.paused());
+});
