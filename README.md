@@ -26,6 +26,7 @@ const _ = abbado(options);
 * `resume` - alias for `pause(0)`.
 * `wait` - waits for pause finish. Actually returns promise, that resolves after pause finished or immediately if there is no pause or if already stopped. If pause will be changed after waiting started, promise will wait for new pause length before resolve. If `stop` or `resume` will be called after waiting started, promise will resolve immediately.
 * `error` - reports error. Optional parameter is string tag, describing kind of error. Returns array of two numbers: number of all reported errors and number of errors with same tag (or `null` if no tag).
+* `paused` - feturns `true` or `false` whether control flow is paused or not.
 
 ### options:
 
