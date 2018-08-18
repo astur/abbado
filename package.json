@@ -1,6 +1,6 @@
 {
   "name": "abbado",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Conductor for concurrent async control flow",
   "main": "index.js",
   "author": "astur <astur@yandex.ru> (http://kozlov.am/)",
