@@ -7,6 +7,7 @@ module.exports = ({
     let result = false;
     let timer = null;
     let errorsCount = 0;
+    let counter = count;
     const errors = {};
     const waiting = [];
     const expires = timeout ? Date.now() + timeout : null;
@@ -32,14 +33,13 @@ module.exports = ({
 
     const stop = arg => {
         if(timer !== null) pause(0);
-        if(typeof arg === 'string') arg = {status: arg};
-        if(!result) result = arg || {status: 'stopped manually'};
+        if(!result) result = typeof arg === 'string' ? {status: arg} : arg || {status: 'stopped manually'};
         return result;
     };
 
     const stopped = () => {
         if(result) return result;
-        if(count !== null && count-- <= 0) return stop({status: 'stopped by count'});
+        if(counter !== null && counter-- <= 0) return stop({status: 'stopped by count'});
         if(expires !== null && expires < Date.now()) return stop({status: 'stopped by timeout'});
         return false;
     };
